@@ -1,0 +1,25 @@
+# DevXchange
+
+DevXchange is a developer-first marketplace for production-ready software.
+
+## What the site contains
+
+- Marketplace listings for Software, Web, AI, Developer, Blockchain and Design.
+- Developer profiles, product pages, licensing information, trust/verification information and marketplace FAQs.
+- Buyer and seller account areas that are intentionally excluded from public indexing.
+
+## Trust model
+
+Verification levels run from 0 (Unverified) to 5 (DevXchange Certified). A badge represents recorded checks for a specific product version. Unautomated checks are shown as “Not yet checked”. Badges cannot be purchased.
+
+## Licensing
+
+Listings use Personal, Commercial, Extended or Enterprise terms. The exact listing license controls permitted and forbidden use.
+
+## Data policy for crawlers
+
+The public catalog is factual. If no approved listings exist, the site says so rather than inventing products, reviews, sales or user counts.
+
+## Canonical site
+
+https://shalimoosavi.github.io/DevXchange/
