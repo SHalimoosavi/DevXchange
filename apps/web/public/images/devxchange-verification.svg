@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">DevXchange verification flow</title>
+  <desc id="desc">A source archive is checked in stages and rises through six verification levels from unverified to certified.</desc>
+  <style>
+    :root{--ink:#0E1A2B;--slate:#8B9BB3;--blue:#2F6BFF;--gold:#E8B23A}
+    .track{fill:none;stroke:#9AA8BC;stroke-width:3;stroke-linecap:round}
+    .level{fill:#F3F6FA;stroke:#AAB7C9;stroke-width:3}
+    .active{fill:#2F6BFF;stroke:#2F6BFF}
+    .gold{fill:#E8B23A;stroke:#E8B23A}
+    .label{font:600 24px system-ui,-apple-system,Segoe UI,sans-serif;fill:#0E1A2B}
+    .small{font:500 17px system-ui,-apple-system,Segoe UI,sans-serif;fill:#607089}
+    .white{fill:#fff}
+    .archive{fill:#fff;stroke:#0E1A2B;stroke-width:4}
+    .check{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+    @media (prefers-reduced-motion:reduce){.motion{animation:none!important}.archive{transform:translateX(0)!important}.stamp{opacity:1!important}}
+    .motion{animation:rise 9s cubic-bezier(.45,.05,.2,1) infinite}
+    .stamp{opacity:0;animation:stamp 9s ease-in-out infinite}
+    @keyframes rise{0%,12%{transform:translate(0,0)}28%{transform:translate(145px,-55px)}43%{transform:translate(290px,-110px)}58%{transform:translate(435px,-165px)}73%{transform:translate(580px,-220px)}86%,100%{transform:translate(725px,-275px)}}
+    @keyframes stamp{0%,78%{opacity:0}84%,94%{opacity:1}100%{opacity:0}}
+  </style>
+  <rect width="1200" height="620" rx="28" fill="#F7F9FC"/>
+  <text x="70" y="78" class="label" font-size="38">Verification you can read</text>
+  <text x="70" y="112" class="small">A release moves through recorded checks. Unchecked work is never presented as verified.</text>
+  <path class="track" d="M125 455H1075"/>
+  <g transform="translate(60 160)">
+    <g class="level"><rect x="0" y="160" width="125" height="135" rx="14"/><text x="62" y="235" text-anchor="middle" class="label">0</text><text x="62" y="270" text-anchor="middle" class="small">Unverified</text></g>
+    <g class="level"><rect x="145" y="125" width="125" height="170" rx="14"/><text x="207" y="220" text-anchor="middle" class="label">1</text><text x="207" y="260" text-anchor="middle" class="small">Listing</text></g>
+    <g class="level"><rect x="290" y="90" width="125" height="205" rx="14"/><text x="352" y="200" text-anchor="middle" class="label">2</text><text x="352" y="245" text-anchor="middle" class="small">Build</text></g>
+    <g class="level"><rect x="435" y="55" width="125" height="240" rx="14"/><text x="497" y="180" text-anchor="middle" class="label">3</text><text x="497" y="230" text-anchor="middle" class="small">Deployment</text></g>
+    <g class="level"><rect x="580" y="20" width="125" height="275" rx="14"/><text x="642" y="160" text-anchor="middle" class="label">4</text><text x="642" y="215" text-anchor="middle" class="small">Security</text></g>
+    <g class="level"><rect x="725" y="0" width="125" height="295" rx="14" fill="#E8B23A" stroke="#E8B23A"/><text x="787" y="155" text-anchor="middle" class="label">5</text><text x="787" y="210" text-anchor="middle" class="small">Certified</text></g>
+    <g class="motion">
+      <rect class="archive" x="-35" y="100" width="72" height="86" rx="8"/>
+      <path d="M-19 100v-16h40v16" fill="none" stroke="#0E1A2B" stroke-width="4"/>
+      <path d="M-19 128h40M-19 146h30M-19 164h20" stroke="#2F6BFF" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <g class="stamp" transform="translate(752 8)">
+      <circle cx="35" cy="35" r="31" fill="#0E1A2B"/>
+      <path class="check" d="M18 35l12 12 23-26"/>
+    </g>
+  </g>
+</svg>
