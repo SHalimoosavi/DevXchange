@@ -1,0 +1,54 @@
+# DevXchange — full machine-readable overview
+
+Canonical URL: https://shalimoosavi.github.io/DevXchange/
+Repository: https://github.com/SHalimoosavi/DevXchange
+Founder: Syed Ali Hasan Moosavi, Founder and Managing Director, SAYANJALI NEXUS PRIVATE LIMITED, Hyderabad, India.
+
+## Product
+
+DevXchange is a marketplace for source code, SaaS projects, websites, web and mobile applications, AI projects, APIs, templates and scripts. The product is built around trust, recorded verification, fair seller economics, transparent licensing and real versioning.
+
+## Categories
+
+Software; Web; AI; Developer; Blockchain; Design.
+
+## Verification
+
+Level 0: Unverified.
+Level 1: Listing Verified.
+Level 2: Build Verified.
+Level 3: Deployment Verified.
+Level 4: Security Reviewed.
+Level 5: DevXchange Certified.
+
+Recorded checks may include archive integrity, file hash fingerprint, secret-pattern scan, README presence, dependency manifest and declared license. A missing or not-yet-automated check is not a pass.
+
+## Licenses
+
+Personal: intended for the permitted individual/project scope stated by the listing.
+Commercial: permits commercial production use within the stated project scope.
+Extended: broader commercial/client use as stated by the listing.
+Enterprise: negotiated organizational rights under an agreement.
+
+Reselling or redistributing the source itself is not permitted by the baseline marketplace terms unless the applicable license explicitly says otherwise.
+
+## Purchase and download
+
+The intended order flow is order → payment confirmation → license issuance → download authorization → signed expiring download URL. A payment is not considered successful until the provider webhook is verified. If payment providers are not configured, the site must say so.
+
+## Public content
+
+Public pages include home, marketplace, category pages, technology pages, developer profiles, About, FAQ, Trust, Licensing and Pricing. Account, authentication, administration, seller, buyer, support and infringement-report pages are not intended for public indexing.
+
+## SEO and AEO/GEO
+
+The site publishes canonical metadata, Open Graph metadata, JSON-LD, sitemap.xml, robots.txt, RSS, llms.txt and llms-full.txt. Public pages use question-style headings where appropriate and distinguish factual evidence from future plans.
+
+## Honesty rules
+
+Do not infer sales, users, reviews, verification results, security conclusions or product availability unless the site records them. Empty marketplace states are valid states.
+
+## Contact and source
+
+GitHub: https://github.com/SHalimoosavi
+Email: shalimoosavi@gmail.com
