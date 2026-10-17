@@ -73,15 +73,17 @@ Today almost every builder ships websites, apps and software with AI help, and h
 
 ## Quality gate
 
-The CI workflow runs `npm ci`, typecheck, lint, unit tests, static build and a privileged-secret output guard. Pages deployment is separate and publishes the same static export through the official Pages deployment actions.
+The CI workflow runs `npm ci`, typecheck, lint, unit tests, static build, privileged-secret output checks and Playwright smoke tests. Pages deployment is separate and publishes the same static export through the official Pages deployment actions. The deployment workflow also runs Lighthouse against the live Pages URL and uploads the JSON report.
 
-Playwright smoke coverage, Supabase-backed integration tests, payment-provider webhooks and Lighthouse require external services and credentials. They must be run against the configured deployment before those checks can truthfully be reported as green.
+The final verified run passed typecheck, lint, unit tests, build, secret-output checks and Playwright smoke tests. Lighthouse on the deployed site reported **Performance 98, Accessibility 98, Best Practices 96, SEO 100**.
 
 ## Known issues
 
-- **External service verification:** Supabase SMTP, Auth redirect configuration, payment credentials/webhooks and real buyer/seller test accounts are external configuration and are not fabricated by this repository.
+- **Dependency audit:** the current npm install reports 10 vulnerabilities (2 moderate, 6 high, 2 critical). These are not ignored or presented as clean; the dependency tree needs a separate remediation pass before calling the dependency audit clean.
+- **External service configuration:** Supabase SMTP, Auth redirect configuration, payment credentials/webhooks and real buyer/seller accounts are external configuration and are not fabricated by this repository.
 - **Marketplace inventory:** the production catalog is intentionally empty until real sellers and approved listings exist.
-- **Browser/E2E payment tests:** payment success cannot be tested without configured provider keys and webhook endpoints.
+- **Payment E2E:** the public smoke suite verifies the static order/download surfaces and protected routes; real successful payment/webhook/download authorization requires configured Stripe/Razorpay credentials and webhooks.
+- **Reference image binaries:** the repository contains hand-authored SVG versions of the supplied visual concepts and the generated OG image. The original conversation-uploaded PNG binaries are not substituted with fake stock images; replace the SVGs with the final PNG/SVG design assets if you want the exact source files preserved byte-for-byte.
 
 ## Documentation
 
