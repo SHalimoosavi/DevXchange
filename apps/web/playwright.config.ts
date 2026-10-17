@@ -1,0 +1,2 @@
+import {defineConfig,devices} from '@playwright/test';
+export default defineConfig({testDir:'./e2e',timeout:30000,fullyParallel:true,retries:process.env.CI?2:0,use:{baseURL:'http://127.0.0.1:4173/DevXchange',trace:'retain-on-failure'},webServer:{command:'node ../../scripts/static-server.mjs',url:'http://127.0.0.1:4173/DevXchange/',reuseExistingServer:!process.env.CI,timeout:30000},projects:[{name:'chromium',use:{...devices['Desktop Chrome']}}]});
