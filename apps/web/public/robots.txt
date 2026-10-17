@@ -1,0 +1,60 @@
+User-agent: Googlebot
+Allow: /
+Disallow: /DevXchange/auth/
+Disallow: /DevXchange/account/
+Disallow: /DevXchange/dashboard/
+Disallow: /DevXchange/admin/
+Disallow: /DevXchange/buyer/
+Disallow: /DevXchange/seller/
+Disallow: /DevXchange/support/
+Disallow: /DevXchange/report/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /DevXchange/auth/
+Disallow: /DevXchange/account/
+Disallow: /DevXchange/dashboard/
+Disallow: /DevXchange/admin/
+Disallow: /DevXchange/buyer/
+Disallow: /DevXchange/seller/
+Disallow: /DevXchange/support/
+Disallow: /DevXchange/report/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /DevXchange/auth/
+Disallow: /DevXchange/account/
+Disallow: /DevXchange/dashboard/
+Disallow: /DevXchange/admin/
+Disallow: /DevXchange/buyer/
+Disallow: /DevXchange/seller/
+Disallow: /DevXchange/support/
+Disallow: /DevXchange/report/
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: *
+Allow: /
+Disallow: /DevXchange/auth/
+Disallow: /DevXchange/account/
+Disallow: /DevXchange/dashboard/
+Disallow: /DevXchange/admin/
+Disallow: /DevXchange/buyer/
+Disallow: /DevXchange/seller/
+Disallow: /DevXchange/support/
+Disallow: /DevXchange/report/
+
+Sitemap: https://shalimoosavi.github.io/DevXchange/sitemap.xml
