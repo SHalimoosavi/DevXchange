@@ -1,1 +1,1 @@
-import {defineConfig} from 'eslint/config';import nextVitals from 'eslint-config-next/core-web-vitals.js';export default defineConfig([...nextVitals,{rules:{'@next/next/no-html-link-for-pages':'off'}}]);
+import {defineConfig} from 'eslint/config';import nextVitals from 'eslint-config-next/core-web-vitals.js';export default defineConfig([nextVitals,{rules:{'@next/next/no-html-link-for-pages':'off'}}]);
