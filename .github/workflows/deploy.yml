@@ -64,5 +64,19 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.20.2
+      - name: Install Lighthouse browser
+        run: sudo apt-get update && sudo apt-get install -y chromium
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Run Lighthouse against deployed site
+        run: |
+          npx --yes lighthouse@12.8.2 https://shalimoosavi.github.io/DevXchange/ --chrome-path="$(command -v chromium)" --output=json --output-path=/tmp/lighthouse.json --quiet
+          node -e "const r=require('/tmp/lighthouse.json'); for (const k of ['performance','accessibility','best-practices','seo']) console.log(k+': '+Math.round((r.categories[k]?.score||0)*100));"
+      - name: Upload Lighthouse report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: /tmp/lighthouse.json
