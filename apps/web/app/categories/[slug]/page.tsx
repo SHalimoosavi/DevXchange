@@ -1,3 +1,3 @@
-import {categories} from '../../lib/catalog';
+import {categories} from '../../../lib/catalog';
 export function generateStaticParams(){return categories.map(c=>({slug:c[0]}))}
 export default async function CategoryPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const item=categories.find(c=>c[0]===slug);if(!item)return <div className="section wrap"><h1>Category not found</h1></div>;return <section className="section"><div className="wrap"><span className="eyebrow">Category</span><h1>{item[1]}</h1><p className="muted" style={{maxWidth:700}}>{item[2]}</p><div className="card" style={{marginTop:28}}><h2>Published products</h2><p className="muted">This category is connected to the live Supabase catalog. When no approved listings exist, DevXchange shows an honest empty state instead of sample inventory.</p></div></div></section>}
