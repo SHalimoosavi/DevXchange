@@ -1,1 +1,8 @@
-import {defineConfig} from 'eslint/config';import nextVitals from 'eslint-config-next/core-web-vitals.js';export default defineConfig([nextVitals,{rules:{'@next/next/no-html-link-for-pages':'off'}}]);
+import {FlatCompat} from '@eslint/eslintrc';
+
+const compat=new FlatCompat({baseDirectory:import.meta.dirname});
+
+export default [
+  ...compat.config({extends:['next/core-web-vitals']}),
+  {ignores:['.next/**','out/**','build/**','next-env.d.ts']},
+];
