@@ -1,0 +1,3 @@
+export const categories=[['software','Software','Complete software projects and utilities.'],['web','Web','Websites, dashboards and full-stack applications.'],['ai','AI','AI products, agents, models and integrations.'],['developer','Developer','Libraries, APIs, CLIs and developer tooling.'],['blockchain','Blockchain','Smart contracts, dApps and infrastructure.'],['design','Design','UI kits, design systems and production assets.']] as const;
+export const technologies=['TypeScript','JavaScript','Python','Go','Rust','React','Next.js','Node.js','FastAPI','Django','PostgreSQL','Supabase','Solidity'];
+export const verification=['Unverified','Listing Verified','Build Verified','Deployment Verified','Security Reviewed','DevXchange Certified'];

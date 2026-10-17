@@ -1,0 +1,13 @@
+{
+  "name": "devxchange",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["apps/web"],
+  "scripts": {
+    "dev": "npm --workspace @devxchange/web run dev",
+    "build": "npm --workspace @devxchange/web run build",
+    "lint": "npm --workspace @devxchange/web run lint",
+    "typecheck": "npm --workspace @devxchange/web run typecheck",
+    "test": "npm --workspace @devxchange/web run test"
+  }
+}

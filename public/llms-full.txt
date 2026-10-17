@@ -1,0 +1,31 @@
+# DevXchange full context
+
+## What buyers should verify
+- Exact version and changelog
+- Included source and assets
+- Installation prerequisites
+- Dependency manifests
+- License rights and restrictions
+- Verification evidence and check dates
+- Support terms and limitations
+- Whether deployment/build was actually tested
+
+## What sellers should disclose
+- Ownership/right to sell
+- Third-party dependencies and licenses
+- Current version
+- Installation path
+- Known limitations
+- Support window
+- What is and is not included
+
+## Trust levels
+0 Unverified
+1 Listing Verified
+2 Build Verified
+3 Deployment Verified
+4 Security Reviewed
+5 DevXchange Certified
+
+## Important limitation
+Automated verification is evidence, not a legal or security guarantee. Published product facts come from the marketplace database.

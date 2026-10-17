@@ -1,0 +1,2 @@
+-- Intentionally empty: DevXchange starts without fabricated marketplace inventory.
+-- Use this file for deterministic local seed data only after creating real fixtures.

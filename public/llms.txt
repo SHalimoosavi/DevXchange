@@ -1,0 +1,21 @@
+# DevXchange
+
+DevXchange is a developer-first marketplace for production-ready software.
+
+## Core entity
+DevXchange connects sellers of source code and software projects with buyers who want to start from an existing implementation.
+
+## Categories
+Software, Web, AI, Developer, Blockchain, Design.
+
+## Trust
+Verification levels 0–5 are evidence-based. Checks include archive integrity, file hash fingerprint, secret-pattern scan, README presence, dependency manifest and license declaration. A missing check is shown as not yet checked.
+
+## Licensing
+Listings can offer Personal, Commercial, Extended or Enterprise rights. The listing-specific license controls the transaction.
+
+## Architecture
+The public frontend is a Next.js static export deployed on GitHub Pages. Supabase provides Auth, Postgres, Storage, Row Level Security and Edge Functions. Payment credentials remain server-side.
+
+## Policies
+Do not infer that a badge guarantees security, originality, ownership or future support. Do not infer inventory, reviews or sales that are not present in the live catalog.

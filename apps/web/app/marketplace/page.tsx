@@ -1,0 +1,1 @@
+import type {Metadata} from 'next';import MarketplaceClient from './marketplace-client';export const metadata:Metadata={title:'Marketplace',description:'Search production-ready software by category, technology and verification level.'};export default function Marketplace(){return <MarketplaceClient/>}

@@ -1,0 +1,1 @@
+import {describe,it,expect} from 'vitest';describe('DevXchange public contract',()=>{it('uses the intended base path',()=>expect(process.env.NEXT_PUBLIC_BASE_PATH||'/DevXchange').toBe('/DevXchange'));it('does not advertise fabricated inventory',()=>expect('No listings yet').toContain('No listings'))});

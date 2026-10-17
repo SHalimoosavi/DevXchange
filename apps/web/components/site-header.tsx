@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export function SiteHeader(){return <header className="site-header"><div className="wrap nav"><Link href="/" className="brand">DEV<span style={{color:'var(--accent)'}}>X</span>CHANGE</Link><nav className="navlinks" aria-label="Primary"><Link href="/marketplace/">Marketplace</Link><Link href="/trust/">Trust</Link><Link href="/licensing/">Licensing</Link><Link href="/about/">About</Link><Link href="/auth/login/" className="btn">Sign in</Link></nav></div></header>}
