@@ -1,0 +1,34 @@
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, writeFileSync, unlinkSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+
+const root = resolve(process.cwd());
+const output = resolve(root, 'apps/web/public/images/og-image.png');
+const temp = resolve(root, 'apps/web/public/images/.og-image.svg');
+
+mkdirSync(dirname(output), { recursive: true });
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0E1A2B"/>
+<text x="80" y="125" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif" font-size="78" font-weight="700">DevXchange</text>
+<rect x="80" y="160" width="92" height="8" rx="4" fill="#E8B23A"/>
+<text x="80" y="245" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="600">The marketplace for</text>
+<text x="80" y="310" fill="#FFFFFF" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="600">production-ready software.</text>
+<text x="80" y="390" fill="#B8C5D8" font-family="Arial,Helvetica,sans-serif" font-size="30">Don't just buy code. Know what you are buying.</text>
+<g transform="translate(825 135)">
+<rect x="0" y="245" width="58" height="105" rx="8" fill="#253A58"/><text x="29" y="335" fill="#FFFFFF" text-anchor="middle" font-family="Arial" font-size="20">0</text>
+<rect x="72" y="195" width="58" height="155" rx="8" fill="#31588F"/><text x="101" y="335" fill="#FFFFFF" text-anchor="middle" font-family="Arial" font-size="20">1</text>
+<rect x="144" y="145" width="58" height="205" rx="8" fill="#3567B8"/><text x="173" y="335" fill="#FFFFFF" text-anchor="middle" font-family="Arial" font-size="20">2</text>
+<rect x="216" y="95" width="58" height="255" rx="8" fill="#2F6BFF"/><text x="245" y="335" fill="#FFFFFF" text-anchor="middle" font-family="Arial" font-size="20">3</text>
+<rect x="288" y="45" width="58" height="305" rx="8" fill="#5D87EA"/><text x="317" y="335" fill="#FFFFFF" text-anchor="middle" font-family="Arial" font-size="20">4</text>
+<rect x="360" y="0" width="58" height="350" rx="8" fill="#E8B23A"/><text x="389" y="335" fill="#0E1A2B" text-anchor="middle" font-family="Arial" font-size="20">5</text>
+</g>
+<text x="80" y="555" fill="#7F91AA" font-family="Arial,Helvetica,sans-serif" font-size="22">Verified source code · licensing · versioning · recorded checks</text>
+</svg>`;
+
+writeFileSync(temp, svg, 'utf8');
+try {
+  execFileSync('magick', [temp, '-strip', '-quality', '92', output], { stdio: 'inherit' });
+} finally {
+  try { unlinkSync(temp); } catch {}
+}
