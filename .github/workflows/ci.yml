@@ -36,3 +36,17 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      - name: Fail if privileged Supabase material reaches the client
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -n "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+            if grep -R -F "$SUPABASE_SERVICE_ROLE_KEY" apps/web/out apps/web/.next .next 2>/dev/null; then
+              echo "A Supabase service-role secret was found in build output."
+              exit 1
+            fi
+          fi
+          if grep -R -n -E 'service_role|SUPABASE_SERVICE_ROLE_KEY' apps/web/out apps/web/.next .next 2>/dev/null; then
+            echo "Privileged Supabase identifiers were found in build output."
+            exit 1
+          fi
