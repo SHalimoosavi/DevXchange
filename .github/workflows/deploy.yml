@@ -77,9 +77,19 @@ jobs:
         uses: actions/deploy-pages@v4
       - name: Run Lighthouse against deployed site
         run: |
+          set -e
           CHROME_PATH="$(find "$HOME/.cache/ms-playwright" -type f \( -path '*/chrome-linux64/chrome' -o -path '*/chrome-linux/chrome' \) | head -1)"
           test -n "$CHROME_PATH" && test -x "$CHROME_PATH"
-          npx --yes lighthouse@12.8.2 https://shalimoosavi.github.io/DevXchange/ --chrome-path="$CHROME_PATH" --chrome-flags="--no-sandbox --disable-dev-shm-usage" --output=json --output-path=/tmp/lighthouse.json --quiet
+          PROFILE="$RUNNER_TEMP/lighthouse-chrome-profile"
+          "$CHROME_PATH" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir="$PROFILE" about:blank >/tmp/chrome-lighthouse.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:9222/json/version >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:9222/json/version
+          npx --yes lighthouse@12.8.2 https://shalimoosavi.github.io/DevXchange/ --port=9222 --output=json --output-path=/tmp/lighthouse.json --quiet
           node -e "const r=require('/tmp/lighthouse.json'); for (const k of ['performance','accessibility','best-practices','seo']) console.log(k+': '+Math.round((r.categories[k]?.score||0)*100));"
       - name: Upload Lighthouse report
         uses: actions/upload-artifact@v4
