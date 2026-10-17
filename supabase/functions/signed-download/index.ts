@@ -1,0 +1,22 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+Deno.serve(async (req) => {
+  if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
+  const authorization = req.headers.get('Authorization');
+  if (!authorization) return new Response('Unauthorized', { status: 401 });
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const anonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+  const serviceRole = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const userClient = createClient(supabaseUrl, anonKey, { global: { headers: { Authorization: authorization } } });
+  const admin = createClient(supabaseUrl, serviceRole);
+  const { data: { user } } = await userClient.auth.getUser();
+  if (!user) return new Response('Unauthorized', { status: 401 });
+  const { licenseId } = await req.json();
+  const { data: license } = await admin.from('licenses').select('id,buyer_id,listing_id').eq('id', licenseId).eq('buyer_id', user.id).maybeSingle();
+  if (!license) return new Response('License not found', { status: 404 });
+  const { data: listing } = await admin.from('listings').select('source_object_key').eq('id', license.listing_id).maybeSingle();
+  if (!listing?.source_object_key) return new Response('Download is not configured for this product', { status: 409 });
+  const { data, error } = await admin.storage.from('product-assets').createSignedUrl(listing.source_object_key, 600, { download: true });
+  if (error || !data?.signedUrl) return new Response(error?.message || 'Unable to create download URL', { status: 500 });
+  await admin.from('downloads').insert({ license_id: license.id });
+  return Response.json({ url: data.signedUrl, expiresIn: 600 });
+});
