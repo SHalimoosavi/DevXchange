@@ -52,3 +52,7 @@ jobs:
             echo "Privileged Supabase identifiers were found in build output."
             exit 1
           fi
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Playwright smoke tests
+        run: npm run e2e
