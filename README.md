@@ -1,49 +1,52 @@
 # DevXchange
 
+![DevXchange verification flow](apps/web/public/images/devxchange-verification.svg)
+
 **The marketplace for production-ready software.**
 
-DevXchange is a developer-first marketplace for source code, SaaS projects, web/mobile applications, websites, AI projects, APIs, templates and scripts. Its core promise is simple: **Don't just buy code. Know what you are buying.**
+> Don't just buy code. Know what you are buying.
 
-## v1.0.0
+DevXchange is a developer-first marketplace for source code, SaaS projects, web and mobile applications, websites, AI projects, APIs, templates and scripts. The product is designed around five practical promises: **trust, verified code, fair seller economics, transparent licensing and real versioning.**
 
-The v1 architecture separates the static public application from privileged marketplace operations:
+## v1.0.0 architecture
 
-- **Frontend:** Next.js + TypeScript + Tailwind CSS, exported as static HTML for GitHub Pages.
+- **Frontend:** Next.js static export, TypeScript and Tailwind CSS, deployed to GitHub Pages through GitHub Actions.
+- **Base path:** `/DevXchange` for this repository deployment. Public URLs are generated with the repository base path.
 - **Backend:** Supabase Postgres, Auth, Storage, Row Level Security and Edge Functions.
-- **Payments:** provider interface with Stripe and Razorpay adapters in Edge Functions. No payment is treated as successful without a provider webhook.
-- **Verification:** recorded evidence only. A badge never means more than the checks actually completed.
-
-GitHub Pages cannot execute a server, so secrets and privileged operations never belong in the frontend. Only the Supabase public publishable/anon key is exposed to the browser.
+- **Privileged logic:** Edge Functions only. GitHub Pages cannot run a server.
+- **Payments:** a provider interface with Stripe and Razorpay adapters behind Edge Functions. An order is never marked paid without a verified provider webhook.
+- **Catalog:** real Supabase data only. If credentials or catalog data are unavailable, the public build shows an honest empty state.
+- **Secrets:** only the Supabase publishable/anon key may reach the browser. The service-role key is restricted to server-side catalog/build tasks and is checked against build output.
 
 ## Local setup
 
-1. Install Node.js 20+ and npm.
-2. Clone the repository.
-3. Copy `.env.example` to `.env.local` and provide the Supabase URL and public key.
-4. Run `npm install`.
-5. Run `npm run dev`.
-6. Open `http://localhost:3000/DevXchange/`.
+1. Install Node.js 20.20.2 and npm 10.8.2 or a compatible Node 20 release.
+2. Clone this repository.
+3. Copy `.env.example` to `.env.local`.
+4. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+5. Run `npm ci`.
+6. Run `npm run dev`.
+7. Open the local URL printed by Next.js.
 
-The public application is deliberately usable with an empty database. Empty marketplace states say **No listings yet** rather than inventing catalog data.
+The public application works with an empty catalog. It does not ship invented listings, reviews, sales or user counts.
 
-## Supabase setup
+## Supabase
 
-1. Create a Supabase project.
-2. Apply migrations in `supabase/migrations/` in filename order.
-3. Create Storage buckets described in `supabase/README.md`.
-4. Deploy the Edge Functions from `supabase/functions/`.
-5. Configure Auth email templates and redirect URLs for the GitHub Pages base path.
-6. Configure payment provider secrets only when payments are ready.
+Apply the SQL migrations in `supabase/migrations/` in filename order. Configure the Auth redirect URLs for the GitHub Pages base path, create the documented Storage buckets, and deploy the Edge Functions under `supabase/functions/`.
 
-## GitHub Pages deployment
+Required production configuration is documented in `docs/setup.md` and `docs/security.md`.
 
-The workflow in `.github/workflows/deploy.yml` builds the static export and publishes `apps/web/out` through GitHub Pages. The app uses `/DevXchange` as its base path when deployed from this repository. `404.html` is copied from the static export so direct navigation to public routes can be recovered by the client router.
+## GitHub Pages
 
-A `CNAME` file is intentionally absent until a custom domain is configured.
+The production workflow is `.github/workflows/deploy.yml` and uses `actions/configure-pages`, `actions/upload-pages-artifact` and `actions/deploy-pages`. The workflow publishes `apps/web/out` and does not use a branch-based Pages build.
+
+In **Repository → Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Do this once if the repository is still configured for a branch/folder source.
+
+No `CNAME` file is committed until a custom domain is actually configured.
 
 ## Trust model
 
-Verification levels are:
+Verification levels are evidence levels, not marketing grades:
 
 0. Unverified
 1. Listing Verified
@@ -52,11 +55,11 @@ Verification levels are:
 4. Security Reviewed
 5. DevXchange Certified
 
-The implementation records individual checks such as archive integrity, file hash fingerprint, secret-pattern scan, README presence, dependency manifest and declared license. Anything not actually checked is displayed as **Not yet checked**.
+Recorded checks include archive integrity, file hash fingerprint, secret-pattern scan, README presence, dependency manifest and declared license. A check that has not run is **Not yet checked**. A badge cannot be purchased.
 
 ## Marketplace scope
 
-v1 includes landing, marketplace discovery, categories and technology filters, product pages, seller onboarding and submission, versioning, admin review, structured reviews, buyer dashboard, favorites, support tickets, licensing, infringement reports, orders and signed-expiring download flows.
+v1 covers public discovery, categories, technology landing pages, product pages, seller onboarding and submission, versioning, admin review, structured reviews, buyer dashboards, favorites, support tickets, standard licensing, infringement reports, order creation and signed-expiring download authorization.
 
 ## Founder
 
@@ -64,13 +67,31 @@ DevXchange was founded by **Syed Ali Hasan Moosavi**, Founder and Managing Direc
 
 GitHub: https://github.com/SHalimoosavi
 
-## Research notes
+## Why DevXchange exists
 
-The product direction is informed by recurring buyer and seller complaints around established source-code marketplaces: outdated dependencies, unclear scope of what is actually included, abandoned projects, opaque review/refund handling, weak support expectations and difficult seller economics. Recent community discussions also point to a trust problem made sharper by AI-assisted code volume. See `docs/market-research.md` for the evidence and the product decisions derived from it.
+Today almost every builder ships websites, apps and software with AI help, and has tools to check them for vulnerabilities. But when it comes to selling, there is no simple trusted place to do it. DevXchange exists so builders can list finished software and new members can buy and start with zero code, knowing what they get.
 
 ## Quality gate
 
-CI runs install, lint, typecheck, build and tests. Browser tests are designed around real Supabase credentials supplied through GitHub Actions secrets; they do not fabricate successful authentication or payments. Lighthouse and Search Console verification are documented separately because their external environments cannot be truthfully claimed from a repository-only build.
+The CI workflow runs `npm ci`, typecheck, lint, unit tests, static build and a privileged-secret output guard. Pages deployment is separate and publishes the same static export through the official Pages deployment actions.
+
+Playwright smoke coverage, Supabase-backed integration tests, payment-provider webhooks and Lighthouse require external services and credentials. They must be run against the configured deployment before those checks can truthfully be reported as green.
+
+## Known issues
+
+- **External service verification:** Supabase SMTP, Auth redirect configuration, payment credentials/webhooks and real buyer/seller test accounts are external configuration and are not fabricated by this repository.
+- **Marketplace inventory:** the production catalog is intentionally empty until real sellers and approved listings exist.
+- **Browser/E2E payment tests:** payment success cannot be tested without configured provider keys and webhook endpoints.
+
+## Documentation
+
+- `docs/architecture.md` — system boundaries and data flow
+- `docs/setup.md` — platform-neutral setup and Supabase configuration
+- `docs/security.md` — RLS, storage, downloads and secret handling
+- `docs/seo.md` — sitemap, robots, JSON-LD, AEO/GEO and webmaster verification
+- `docs/licensing.md` — Personal, Commercial, Extended and Enterprise terms
+- `docs/api-contract.md` — public/client-to-Edge Function contract
+- `docs/market-research.md` — marketplace pain points and product decisions
 
 ## License
 
