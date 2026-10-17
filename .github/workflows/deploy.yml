@@ -77,8 +77,8 @@ jobs:
         uses: actions/deploy-pages@v4
       - name: Run Lighthouse against deployed site
         run: |
-          CHROME_PATH="$(find "$HOME/.cache/ms-playwright" -type f -path '*/chrome-linux/chrome' | head -1)"
-          test -x "$CHROME_PATH"
+          CHROME_PATH="$(find "$HOME/.cache/ms-playwright" -type f \( -path '*/chrome-linux64/chrome' -o -path '*/chrome-linux/chrome' \) | head -1)"
+          test -n "$CHROME_PATH" && test -x "$CHROME_PATH"
           npx --yes lighthouse@12.8.2 https://shalimoosavi.github.io/DevXchange/ --chrome-path="$CHROME_PATH" --output=json --output-path=/tmp/lighthouse.json --quiet
           node -e "const r=require('/tmp/lighthouse.json'); for (const k of ['performance','accessibility','best-practices','seo']) console.log(k+': '+Math.round((r.categories[k]?.score||0)*100));"
       - name: Upload Lighthouse report
